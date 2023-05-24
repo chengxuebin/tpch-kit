@@ -1,0 +1,114 @@
+-- sccsid:     @(#)dss.ri	2.1.8.1
+-- tpch benchmark version 8.0
+
+use tpch;
+
+-- alter table tpch.region drop primary key;
+-- alter table tpch.nation drop primary key;
+-- alter table tpch.part drop primary key;
+-- alter table tpch.supplier drop primary key;
+-- alter table tpch.partsupp drop primary key;
+-- alter table tpch.orders drop primary key;
+-- alter table tpch.lineitem drop primary key;
+-- alter table tpch.customer drop primary key;
+
+
+-- for table region
+alter table tpch.region
+add primary key (r_regionkey);
+
+-- for table nation
+alter table tpch.nation
+add primary key (n_nationkey);
+
+alter table tpch.nation
+add foreign key nation_fk1 (n_regionkey) references 
+tpch.region(r_regionkey);
+
+commit work;
+
+-- for table part
+alter table tpch.part
+add primary key (p_partkey);
+
+commit work;
+
+-- for table supplier
+alter table tpch.supplier
+add primary key (s_suppkey);
+
+alter table tpch.supplier
+add foreign key supplier_fk1 (s_nationkey) references 
+tpch.nation(n_nationkey);
+
+commit work;
+
+-- for table partsupp
+alter table tpch.partsupp
+add primary key (ps_partkey,ps_suppkey);
+
+commit work;
+
+-- for table customer
+alter table tpch.customer
+add primary key (c_custkey);
+
+alter table tpch.customer
+add foreign key customer_fk1 (c_nationkey) references 
+tpch.nation(n_nationkey);
+
+commit work;
+
+-- for table lineitem
+alter table tpch.lineitem
+add primary key (l_orderkey,l_linenumber);
+
+commit work;
+
+-- for table orders
+alter table tpch.orders
+add primary key (o_orderkey);
+
+commit work;
+
+-- for table partsupp
+alter table tpch.partsupp
+add foreign key partsupp_fk1 (ps_suppkey) references 
+tpch.supplier(s_suppkey);
+
+commit work;
+
+alter table tpch.partsupp
+add foreign key partsupp_fk2 (ps_partkey) references 
+tpch.part(p_partkey);
+
+commit work;
+
+-- for table orders
+alter table tpch.orders
+add foreign key orders_fk1 (o_custkey) references 
+tpch.customer(c_custkey);
+
+commit work;
+
+-- for table lineitem
+alter table tpch.lineitem
+add foreign key lineitem_fk1 (l_orderkey) references 
+tpch.orders(o_orderkey);
+
+commit work;
+
+alter table tpch.lineitem
+add foreign key lineitem_fk2 (l_partkey,l_suppkey) references 
+        tpch.partsupp(ps_partkey,ps_suppkey);
+
+commit work;
+
+alter table customer rename to customer;
+alter table lineitem rename to lineitem;
+alter table nation rename to nation;
+alter table orders rename to orders;
+alter table part rename to part;
+alter table partsupp rename to partsupp;
+alter table region rename to region;
+alter table supplier rename to supplier;
