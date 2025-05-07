@@ -154,3 +154,37 @@ ORGANIZATION EXTERNAL (
     )
     LOCATION('region.tbl')
 );
+
+
+TRUNCATE TABLE part;
+TRUNCATE TABLE supplier;
+TRUNCATE TABLE partsupp;
+TRUNCATE TABLE customer;
+TRUNCATE TABLE orders;
+TRUNCATE TABLE lineitem;
+TRUNCATE TABLE nation;
+TRUNCATE TABLE region;
+
+ALTER SESSION SET nls_date_format='YYYY-MM-DD';
+
+INSERT /*+ APPEND */ INTO  part     SELECT * FROM ext_part;
+INSERT /*+ APPEND */ INTO  supplier SELECT * FROM ext_supplier;
+INSERT /*+ APPEND */ INTO  partsupp SELECT * FROM ext_partsupp;
+INSERT /*+ APPEND */ INTO  customer SELECT * FROM ext_customer;
+INSERT /*+ APPEND */ INTO  orders   SELECT * FROM ext_orders;
+INSERT /*+ APPEND */ INTO  lineitem SELECT * FROM ext_lineitem;
+INSERT /*+ APPEND */ INTO  nation   SELECT * FROM ext_nation;
+INSERT /*+ APPEND */ INTO  region   SELECT * FROM ext_region;
+
+-- remove the external tables
+DROP TABLE ext_part;
+DROP TABLE ext_supplier;
+DROP TABLE ext_partsupp;
+DROP TABLE ext_customer;
+DROP TABLE ext_orders;
+DROP TABLE ext_lineitem;
+DROP TABLE ext_nation;
+DROP TABLE ext_region;
+
+-- remove the external directory
+-- DROP DIRECTORY tpch_dir;

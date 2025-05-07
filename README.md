@@ -1,3 +1,40 @@
+## 编译说明
+
+1. **编译**
+
+```bash
+cd tpch-kit/dbgen
+
+# 编译
+rm -rf ./dist/bin && \
+mkdir -p ./dist/bin && \
+make clean && make MACHINE=LINUX DATABASE=MYSQL && \
+mv ./dbgen ./dist/bin/dbgen-mysql && \
+make clean && make MACHINE=LINUX DATABASE=POSTGRESQL && \
+mv ./dbgen ./dist/bin/dbgen-postgresql && \
+make clean && make MACHINE=LINUX DATABASE=ORACLE && \
+mv ./dbgen ./dist/bin/dbgen-oracle && \
+make clean && make MACHINE=LINUX DATABASE=INFORMIX && \
+mv ./dbgen ./dist/bin/dbgen-informix && \
+make clean && make MACHINE=LINUX DATABASE=DB2 && \
+mv ./dbgen ./dist/bin/dbgen-db2 && \
+make clean && make MACHINE=LINUX DATABASE=SQLSERVER && \
+mv ./dbgen ./dist/bin/dbgen-sqlserver && \
+cp ./dists.dss column_split.sh ./dist/bin/ 
+```
+
+2. **打包**
+
+```bash
+cd tpch-kit/dbgen
+
+rm -rf tpch && \
+mkdir -p tpch && \
+cp -r dist/* tpch/ && \
+tar czf tpch_2_13_0.tar.gz ./tpch
+```
+
+
 tpch-kit
 ========
 
